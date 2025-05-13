@@ -46,7 +46,7 @@ class UserController extends Controller implements HasMiddleware
             $user = User::create([
                 'name'=>$request->name,
                 'email'=>$request->email,
-                'password'=>Hash::make('$request->password'),
+                'password'=>Hash::make($request->password),
             ]);
             $user->syncRoles($request->role);
             $notification = ['message' => 'User Created', 'alert-type' => 'success'];
@@ -77,7 +77,7 @@ class UserController extends Controller implements HasMiddleware
             $userupdate = User::find($id);
             $userupdate->name = $request->name;
             $userupdate->email = $request->email;
-            $userupdate->password = Hash::make('$request->password');
+            $userupdate->password = Hash::make($request->password);
             $userupdate->save();
             $userupdate->syncRoles($request->role);
             $notification = ['message' => 'User Updated', 'alert-type' => 'success'];
