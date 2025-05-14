@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/list', [UserController::class, 'index'])->name('users.index');
     Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/user/store', [UserController::class, 'store'])->name('users.store');
-    Route::get('/user/edit{encryptedId}', [UserController::class, 'edit'])->name('users.edit');
+    Route::get('/user/edit/{encryptedId}', [UserController::class, 'edit'])->name('users.edit');
     Route::post('/user/update', [UserController::class, 'update'])->name('users.update');
     Route::get('/user/delete/{encrypteddelete}', [UserController::class, 'destroy'])->name('users.destroy');
 
@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/article/list', [ArticleController::class, 'index'])->name('articles.index');
     Route::get('/article/create', [ArticleController::class, 'create'])->name('articles.create');
     Route::post('/article/store', [ArticleController::class, 'store'])->name('articles.store');
-    Route::get('/article/edit{encryptedId}', [ArticleController::class, 'edit'])->name('articles.edit');
+    Route::get('/article/edit/{encryptedId}', [ArticleController::class, 'edit'])->name('articles.edit');
     Route::post('/article/update', [ArticleController::class, 'update'])->name('articles.update');
     Route::get('/article/delete/{encrypteddelete}', [ArticleController::class, 'destroy'])->name('articles.destroy');
 
@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/permission/list', [PermissionController::class, 'index'])->name('permissions.index');
     Route::get('/permission/create', [PermissionController::class, 'create'])->name('permissions.create');
     Route::post('/permission/store', [PermissionController::class, 'store'])->name('permission.store');
-    Route::get('/permission/edit{encryptedId}', [PermissionController::class, 'edit'])->name('permission.edit');
+    Route::get('/permission/edit/{encryptedId}', [PermissionController::class, 'edit'])->name('permission.edit');
     Route::post('/permission/update', [PermissionController::class, 'update'])->name('permission.update');
     Route::get('/permission/delete/{encrypteddelete}', [PermissionController::class, 'destroy'])->name('permission.destroy');
 
@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/role/list', [RoleController::class, 'index'])->name('roles.index');
     Route::get('/role/create', [RoleController::class, 'create'])->name('roles.create');
     Route::post('/role/store', [RoleController::class, 'store'])->name('roles.store');
-    Route::get('/role/edit{encryptedId}', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::get('/role/edit/{encryptedId}', [RoleController::class, 'edit'])->name('roles.edit');
     Route::post('/role/update', [RoleController::class, 'update'])->name('roles.update');
     Route::get('/role/delete/{encrypteddelete}', [RoleController::class, 'destroy'])->name('roles.destroy');
 

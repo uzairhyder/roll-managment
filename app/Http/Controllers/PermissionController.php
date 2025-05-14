@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\PermissionRepositoryInterface;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Crypt;
@@ -10,6 +11,12 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class PermissionController extends Controller implements HasMiddleware
 {
+    private PermissionRepositoryInterface $PermissionRepository;
+
+    public function __construct(PermissionRepositoryInterface $PermissionRepository)
+    {
+        $this->PermissionRepository = $PermissionRepository;
+    }
     public static function middleware(): array
     {
         return [
@@ -24,71 +31,37 @@ class PermissionController extends Controller implements HasMiddleware
     //this method will show permission page
     public function index(){
 
-        $permissions = Permission::orderBy('created_at', 'desc')->paginate(10);
+        return $this->PermissionRepository->getPermissions();
 
-        return view('adminpanel.permissions.index',get_defined_vars());
+
     }
 
     //this method will show permission create page
     public function create(){
-        return view('adminpanel.permissions.create');
+      return $this->PermissionRepository->createPermission();
     }
 
     //this method will show permission store page
     public function store(Request $request){
+        return $this->PermissionRepository->storePermission($request);
 
-        $request->validate([
-            'name' => 'required|unique:permissions|max:50',
-        ]);
-        try{
-            Permission::create([
-                'name'=>$request->name,
-            ]);
-            $notification = ['message' => 'Permission Created', 'alert-type' => 'success'];
-            return redirect()->route('permissions.index')->with($notification);
-        }catch (\Exception $e) {
-            $notification = ['message' => $e->getMessage(), 'alert-type' => 'error'];
-            return redirect()->route('permissions.create')->with($notification);
-        }
     }
 
     //this method will show permission edit page
-    public function edit(Request $request,$encryptedId){
-        $id = Crypt::decryptString($encryptedId);
-        $permissionedit = Permission::find($id);
-        return view('adminpanel.permissions.edit',get_defined_vars());
+    public function edit($encryptedId){
+     return $this->PermissionRepository->editPermission($encryptedId);
     }
 
 
     //this method will show permission update page
     public function update(Request $request){
-        $request->validate([
-            'name' => 'required|unique:permissions|max:50',
-        ]);
-        try{
-            $id = Crypt::decryptString($request->id);
-                $permissionupdate = Permission::find($id);
-                $permissionupdate->name = $request->name;
-            $permissionupdate->save();
-            $notification = ['message' => 'Permission Updated', 'alert-type' => 'success'];
-            return redirect()->route('permissions.index')->with($notification);
-        }catch (\Exception $e) {
-            $notification = ['message' => $e->getMessage(), 'alert-type' => 'error'];
-            return redirect()->route('permissions.index')->with($notification);
-        }
+       return $this->PermissionRepository->updatePermission($request);
     }
 
     //this method will show permission delete page
     public function destroy($encrypteddelete){
-        try {
-            $id = Crypt::decryptString($encrypteddelete);
-            $permissiondelete = Permission::find($id);
-            $permissiondelete->delete();
-            $notification = ['message' => 'Permission Deleted', 'alert-type' => 'success'];
-            return redirect()->route('permissions.index')->with($notification);
-        }catch (\Exception $e) {
-            $notification = ['message' => $e->getMessage(), 'alert-type' => 'error'];
-            return redirect()->route('permissions.index')->with($notification);
-        }
+      return $this->PermissionRepository->destroyPermission($encrypteddelete);
     }
+
+
 }
