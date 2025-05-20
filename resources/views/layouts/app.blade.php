@@ -34,72 +34,7 @@
                 {{ $slot }}
             </main>
         </div>
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-        <script>
-            @if (Session::has('message'))
-            var type = "{{ Session::get('alert-type', 'info') }}";
-
-            switch (type) {
-                case 'info':
-                    Swal.fire({
-                        icon: 'info',
-                        title: "{{ Session::get('message') }}",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer);
-                            toast.addEventListener('mouseleave', Swal.resumeTimer);
-                        }
-                    });
-                    break;
-                case 'success':
-                    Swal.fire({
-                        icon: 'success',
-                        title: "{{ Session::get('message') }}",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer);
-                            toast.addEventListener('mouseleave', Swal.resumeTimer);
-                        }
-                    });
-                    break;
-                case 'warning':
-                    Swal.fire({
-                        icon: 'warning',
-                        // toast: true,
-                        // position: "top-end",
-                        title: "{{ Session::get('message') }}",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer);
-                            toast.addEventListener('mouseleave', Swal.resumeTimer);
-                        }
-                    });
-                    break;
-                case 'error':
-                    Swal.fire({
-                        icon: 'error',
-                        // toast: true,
-                        // position: "top-end",
-                        title: "{{ Session::get('message') }}",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer);
-                            toast.addEventListener('mouseleave', Swal.resumeTimer);
-                        }
-                    });
-                    break;
-            }
-            @endif
-
-        </script>
+        {{-- include script file --}}
+         @include('layouts.script')
             </body>
 </html>
